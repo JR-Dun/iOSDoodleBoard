@@ -25,3 +25,25 @@ self.drawView.currentType = kDrawShapeArrow;
 [self.drawView next];
 
 ```
+
+
+## size有变动的话需要调用method resetSize
+```
+WS(weakSelf);
+[UIView animateWithDuration:0.25 animations:^{
+    for(NSLayoutConstraint *constraint in self.drawView.superview.constraints)
+    {
+        if(constraint.firstItem == self.drawView && constraint.firstANSLayoutAttributeWidth)
+        {
+            constraint.constant = constraint.constant - 50;
+        }
+    }
+    [weakSelf.view layoutIfNeeded];
+} completion:^(BOOL finished) {
+    if(finished)
+    {
+        [weakSelf.drawView resetSize];
+    }
+}];
+
+```
